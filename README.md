@@ -1,125 +1,125 @@
-# Friend Tech subgraph 开发
+# Friend Tech Submap Development
 
 ---
-Friend Tech 项目信息
-- 项目名称：Friend Tech
-- 项目描述：Friend Tech 是一个去中心化社交平台，允许用户将自己代币化。
-- 公链：Base
-- 合约地址： 0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4
-- 网址：https://www.friend.tech
+Friend Tech Project Information
+- Project Name: Friend Tech
+- Description Project: Friend Tech is a decentralized social platform that allows users to tokenize themselves.
+- Public Chain: Base
+- Contract: 0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4
+- Website: https://www.friend.tech
 
-### 一、 安装依赖
+### I. Installing dependencies
 
 ```bash
 yarn add @graphprotocol/graph-cli
 yarn add @graphprotocol/graph-ts
 ```
 
-### 二、 subgraph创建
-### 2.1 下载合约abi文件
-首先我们可以手动下载合约的abi文件到本地，加速创建过程，合约abi地址：https://basescan.org/address/0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4#code
-将abi文件内容写入到ft.json文件中
-![img_3.png](friend-tech/imgs/img_3.png)
-![img_2.png](friend-tech/imgs/img_2.png)
+### 2. Subgraph creation
+### 2.1 Downloading the contract abi file
+First of all, we can manually download the contract ABI file locally to speed up the creation process, contract ABI address: https://basescan.org/address/0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4#code
+Write the contents of the abi file to ft.json file.
+![img_3.png](imgs/img_3.png)
+![img_2.png](imgs/img_2.png)
 ```bash
 ➜ cd tmp
 ➜ vim ft.json
 ➜ cat ft.json
-[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],
+[{"anonymous":false, "inputs":[{"indexed":true, "internalType": "address", "name": "previousOwner", "type": "address"},{"indexed":true, " internalType": "address", "name": "newOwner", "type": "address"}],
 ...
 ```
 
-### 2.2 初始化subgraph项目
-首先安装完 graph-cli 工具后，我们在本地创建一个新的目录，然后在终端使用命令graph init初始化一个新的subgraph项目
-![img_1.png](friend-tech/imgs/img_1.png)
-graph cli 客户端会引导你一步步创建，需要自定义的参数会按照不同的客户端版本有所不同，但是大致如下:
+### 2.2 Initializing Subgraph Projects
+First after installing the graph-cli tool, we create a new directory locally and initialize a new subgraph project in the terminal using the command graph init
+![img_1.png](imgs/img_1.png)
+The graph cli client will guide you through the creation step by step, the parameters to be customized will vary according to the client version, but are roughly as follows:
 ```bash
-➜  tmp graph init
-✔ Protocol · ethereum
-✔ Product for which to initialize · subgraph-studio
-✔ Subgraph slug · friend-tech
-✔ Directory to create the subgraph in · friend-tech
-✔ Ethereum network · mainnet # evm兼容的公链都可以选mainnet
-✔ Contract address · 0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4 # 合约地址
-✖ Failed to fetch ABI from Etherscan: request to https://api.etherscan.io/api?module=contract&action=getabi&address=0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4 failed, reason: read ECONNRESET
-✖ Failed to fetch Start Block: Failed to fetch contract creation transaction hash
+➜ tmp graph init
+Protocol - ethereum
+Product to initialize - subgraph-studio
+Title of the subgraph - friends-tech
+✔ Directory to create subgraphs - friend-tech
+✔ Ethernet network - mainnet # evm-compatible public chains can choose mainnet
+✔ Contract address - 0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4 # Contract address
+Failed to get ABI from Etherscan: request https://api.etherscan.io/api?module=contract&action=getabi&address=0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4 Failed due to: read ECONNRESET
+✖ Failed to fetch starting block: Failed to fetch contract creation transaction hash
 
-✔ ABI file (path) · ./ft.json  # 这里填我们手动下载的abi文件
-✔ Start Block · 2430440 # 合约创建的区块高度
-✔ Contract Name · Contract
-✔ Index contract events as entities (Y/n) · true
-  Generate subgraph
-  Write subgraph to directory
-✔ Create subgraph scaffold
-✔ Initialize networks config
-✔ Initialize subgraph repository
-✖ Failed to install dependencies: Command failed: yarn # 有报错不要仅 下面教大家如何解决
-```
-获取合约部署区块高度
-![img_4.png](friend-tech/imgs/img_4.png)
-![img_5.png](friend-tech/imgs/img_5.png)
-最后 yarn 或者 npm 会根据初始化流程安装一些具体项目依赖，其中可能会有一个 concat-stream github 仓库版本不存在特定分支feat/smaller的报错，我们可以使用package.json 里面的resolutions 将有问题的分支重定向到我们chainbase的分支：
-```json
-  "resolutions": {
+✔ ABI file (path) - . /ft.json # Fill in the abi file we downloaded manually here
+✔ Starting block - 2430440 # Height of the block where the contract was created
+✔ Contract name - Contract
+✔ Index contract events as entities (y/n) - true
+  Generate Subchart
+  Write the subgraph to the catalog
+Create subgraph holder
+Initialize network configuration
+✔ Initialize subgraph library
+Failed to install dependencies: command failed: yarn # There are errors reported don't just The following shows you how to fix it
+``.
+Get contract deployment block height
+![img_4.png](imgs/img_4.png)
+![img_5.png](imgs/img_5.png)
+Finally, yarn or npm will install some project-specific dependencies based on the initialization process, and there may be a concat-stream github repository version that doesn't exist for a particular branch of feature/smaller, so we can use the resolutions inside package.json to redirect the problematic branch to our chainbase branch:
+``json
+  "solutions": {
     "concat-stream": "https://github.com/chainbase-labs/concat-stream#1.4.x"
-  },
-```
-![img_6.png](friend-tech/imgs/img_6.png)
+  }, ``json "solutions": { "concat-stream": "
+``
+![img_6.png](imgs/img_6.png)
 
-最后重新执行一次 yarn 安装确认项目初始化依赖是否正常
+Finally, re-execute the yarn install once more to make sure the project initializes its dependencies correctly
 ```bash
 yarn && yarn install
-```
+``
 
-### 2.3 编写subgraph schema
-![img_7.png](friend-tech/imgs/img_7.png)
-graph init 完成后默认就会为我们自动生成上面的框架代码，只需要修改几个文件就可以达到我们想索引 bayc 合约的目地。接下来让我们一步步了解各个文件的作用，并尝试编写出能索引合约数据的subgraph
+### 2.3 Writing the subgraph pattern
+![img_7.png](imgs/img_7.png)
+Once graph init is complete, the above framework code will be generated for us by default, and only a few files need to be modified to achieve the goal of indexing bayc contracts. Next, let's step by step to understand the function of each file and try to write a subgraph that can index the contract data.
 1. subgraph.yaml
-   第一步是需要定义我们的数据源，也就是告诉 subgraph 具体索引什么智能合约，合约地址、网络、abi和索引触发的一些处理器等
+   The first step is to define our data source, i.e. tell the subgraph what smart contracts to index, the contract address, network, abi and some processors that will trigger the indexing.
 ```bash
 specVersion: 0.0.5
-schema:
-  file: ./schema.graphql
+specVersion: 0.0.5
+  file: . /schema.graphql
 dataSources:
-  - kind: ethereum
-    name: Contract
+  - kind: Ethernet
+    Name: Contracts
     network: mainnet
     source:
       address: "0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4"
-      abi: Contract
+      abi: contract
       startBlock: 2430440
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
+      language: WSM/AssemblerScript
+      entity: OwnershipTransferred
         - OwnershipTransferred
-        - Trade
+        - Transactions
       abis:
-        - name: Contract
-          file: ./abis/Contract.json
+        - Name: Contract
+          File: . /abis/Contract.json
       eventHandlers:
-        - event: Trade(address,address,bool,uint256,uint256,uint256,uint256,uint256)
-          handler: handleTrade
-      file: ./src/contract.ts
-```
-The Graph 允许我们在EVM 链上定义三种处理函数：事件处理函数、调用处理函数和块处理函数。详细可以参考：**[Subgraph Manifest](https://github.com/graphprotocol/graph-node/blob/master/docs/subgraph-manifest.md)**
+        - event: trade(address,address,bool,uint256,uint256,uint256,uint256,uint256)
+          Handlers: handleTrade
+      File: . /src/contract.ts
+``
+The Graph allows us to define three kinds of handlers on the EVM chain: event handlers, call handlers and block handlers. For more details, please refer to: **[Subgraph Manifest](https://github.com/graphprotocol/graph-node/blob/master/docs/subgraph-manifest.md)**.
 
-这里核心的处理函数就是eventHandlers，它定义了我们从区块链事件中怎么索引数据。拿Transfer事件举例：
+The core handler function here is eventHandlers, which defines how we index data from blockchain events.
 
-- 每当一个 NFT 从一个地址转移到另外一个地址时，就会触发此事件。它会记录NFT 的前所有者、新所有者和具体的 NFT TOKEN ID
-- 我们希望能从初始区块开始记录transfer，这样我们就能记录完整的BAYC NFT完整的所有权历史
-- 此外，在后面定义Transfer ID 实体时如果将其标记为不可变，那么查询速度会更快
+- This event is triggered whenever an nft is moved from one address to another. It records the previous owner of the nft, the new owner, and the specific nft token id.
+- We want to be able to record transfers from the initial block so that we can record the complete ownership history of the full BAYC NFT
+- Additionally, it will be faster to query if the Transfer ID entity is marked as immutable when it is defined later on
 
 2. schema.garphql
-   schema定义了我们需要存储的数据类型，也就是最终存储到 postgresql 的字段，后续也可以通过这些字段来自定义查询语句
+   The schema defines the type of data we need to store, which are the fields that will eventually be stored in postgresql, and which can be used later to customize the query statement
 ```bash
 type Protocol @entity {
   id: ID!
   userCount: Int!
   protocolRevenue: BigDecimal!
   accountRevenue: BigDecimal!
-  tradeVolume: BigDecimal!
+  tradeVolume: trade volume BigDecimal!
   totalTrades: Int!
 }
 
@@ -127,40 +127,40 @@ type Account @entity {
   id: ID!
   holdersCount: Int!
   keySupply: BigDecimal!
-  holders: [Holder!]! @derivedFrom(field: "account")
+  holders: [holders!] ! @derivedFrom(field: "account")
 }
 
 type Holder @entity {
   id: ID!
-  account: Account!
+  account: account!
   keysOwned: BigDecimal!
 }
 
 type Trade @entity {
-  id: ID!
-  trader: Bytes!
+  keysOwned: BigDecimal!
+  bytes. subject: Bytes!
   subject: Bytes!
-  isBuy: Boolean!
-  shareAmount: BigDecimal!
+  isBuy: Boolean value!
+  shareAmount: share amount BigDecimal!
   ethAmount: BigDecimal!
   protocolEthAmount: BigDecimal!
   subjectEthAmount: BigDecimal!
-  supply: BigDecimal!
+  supplyEthAmount: BigDecimal!
 }
 ```
-这里有几点需要注意，每个实体需要有 @entity 指令。还需要有一个 ID字段，该字段的唯一值必须适用于所有相同类型的实体。下面是一些常见的数据类型，详细可以参考：类型
-![img_8.png](friend-tech/imgs/img_8.png)
+There are a few things to note here, each entity needs to have the @entity directive. There also needs to be an ID field whose unique value must apply to all entities of the same type.
+![img_8.png](imgs/img_8.png)
 
-3. contract.ts(friendtech-shares-v-1.ts)
-   这个文件是我们的处理器，也就是我们从区块链事件中索引数据的具体逻辑，这里我们只需要关注 handleTrade 函数，它会在每次 Transfer 事件触发时被调用，我们可以在这里定义我们需要索引的数据
+3. contract.ts (friendtech-shares-v-1.ts)
+   This file is our handler, which is the exact logic we use to index data from blockchain events, here we only need to focus on the handleTrade function, which will be called every time a Transfer event is triggered, and where we can define the data we need to index
 ```bash
-import { BigDecimal, crypto, BigInt, Bytes } from '@graphprotocol/graph-ts'
+import { BigDecimal, crypto, BigInt, Bytes } from '@graphprotocol/graph-ts'.
 import {
     Trade as TradeEvent,
-} from '../../../friend-tech/generated/FriendtechSharesV1/FriendtechSharesV1'
-import { Trade, Protocol, Account, Holder } from '../../../friend-tech/generated/schema'
+} from '... /... /... /friend-tech/generated/FriendtechSharesV1/FriendtechSharesV1'.
+From '... /... /... /friend-tech/generated/schema' to import { Trade, Protocol, Account, Holder }.
 
-function getOrCreateAccount(accountId: string): Account {
+function getOrCreateAccount(accountId: string): account {
     let account = Account.load(accountId)
     if (account == null) {
         account = new Account(accountId)
@@ -179,23 +179,23 @@ function getOrCreateHolder(holderId: string, account: Account): Holder {
         holder.account = account.id
         holder.save()
 
-        // Update account's holders count
+        // Update the number of account holders
         account.holdersCount = account.holdersCount + 1
         account.save()
     }
-    return holder as Holder
+    Returns the holder as a holder
 }
 
-function getOrCreateProtocol(protocolId: string): Protocol {
+function getOrCreateProtocol(protocolId: string): protocol {
     let protocol = Protocol.load(protocolId)
     if (protocol == null) {
         protocol = new Protocol(protocolId)
-        protocol.userCount = 0
-        protocol.protocolRevenue = BigDecimal.fromString('0')
+        Protocol Users = 0
+        protocolRevenue = BigDecimal.fromString('0')
         protocol.accountRevenue = BigDecimal.fromString('0')
-        protocol.tradeVolume = BigDecimal.fromString('0')
-        protocol.totalTrades = 0
-        protocol.save()
+        protocol.volume = BigDecimal.fromString('0')
+        protocol.totalVolume = 0
+        Protocol Save
     }
     return protocol as Protocol
 }
@@ -212,103 +212,103 @@ export function handleTrade(event: TradeEvent): void {
     trade.supply = event.params.supply.toBigDecimal()
     trade.save()
 
-    let protocol = getOrCreateProtocol('1') // Assuming there is only one protocol
+    let protocol = getOrCreateProtocol('1') // assume there is only one protocol
     protocol.tradeVolume = protocol.tradeVolume.plus(trade.ethAmount)
     protocol.totalTrades = protocol.totalTrades + 1
     protocol.protocolRevenue = protocol.protocolRevenue.plus(trade.protocolEthAmount)
     protocol.accountRevenue = protocol.accountRevenue.plus(trade.subjectEthAmount)
-    protocol.userCount = protocol.userCount + 1 // This logic may need adjustment based on your specific definition of a user
-    protocol.save()
+    protocol.userCount = protocol.userCount + 1 // This logic may need to be adjusted based on user-specific definitions
+    Protocol saving
 
     let accountId = event.params.trader.toHex()
     let account = getOrCreateAccount(accountId)
 
-    account.keySupply = account.keySupply.plus(trade.shareAmount) // Assuming shareAmount corresponds to keys
-    account.save()
+    account.keySupply = account.keySupply.plus(trade.shareAmount) // assume share amount corresponds to key
+    Save the account
 
     let holderId = event.transaction.from.toHex()
     let holder = getOrCreateHolder(holderId, account)
 
-    holder.keysOwned = holder.keysOwned.plus(trade.shareAmount) // Update the keys owned by this holder
+    holder.keysOwned = holder.keysOwned.plus(trade.shareAmount) // update the keys owned by this holder
     holder.save()
 }
 ```
 
-### 2.3 编译和构建
-到这里，我们已经完整开发完成了一个简单的subgraph，接下来就可以编译我们的代码并且部署 subgraph 。
+### 2.3 Compile and Build By this point, we've completed development in its entirety
+At this point, we've fully developed a simple subgraph, and we can now compile our code and deploy the subgraph.
 
-1. graph codegen
+Coding the graph
 
-每次修改完subgraph.yaml 和scheme.graphql文件后都要执行 codegen，用来生成generated目录中对应的AssemblyScript文件：
-```bash
-➜  friend-tech git:(main) ✗ graph codegen               
-  Skip migration: Bump mapping apiVersion from 0.0.1 to 0.0.2
-  Skip migration: Bump mapping apiVersion from 0.0.2 to 0.0.3
-  Skip migration: Bump mapping apiVersion from 0.0.3 to 0.0.4
-  Skip migration: Bump mapping apiVersion from 0.0.4 to 0.0.5
-  Skip migration: Bump mapping apiVersion from 0.0.5 to 0.0.6
-  Skip migration: Bump manifest specVersion from 0.0.1 to 0.0.2
-  Skip migration: Bump manifest specVersion from 0.0.2 to 0.0.4
-✔ Apply migrations
-✔ Load subgraph from subgraph.yaml
-  Load contract ABI from abis/Contract.json
-✔ Load contract ABIs
-  Generate types for contract ABI: Contract (abis/Contract.json)
-  Write types to generated/Contract/Contract.ts
-✔ Generate types for contract ABIs
-✔ Generate types for data source templates
-✔ Load data source template ABIs
-✔ Generate types for data source template ABIs
+Each time you modify the subgraph.yaml and scheme.graphql files, run codegen to generate the corresponding AssemblyScript files in the generated directory: ``bash
+``bash
+➜ friend-tech git:(main) ✗ graph codegen               
+Skip migration: Upgrade apiVersion from 0.0.1 to 0.0.2.
+Skip migration: Upgrade apiVersion from 0.0.2 to 0.0.3.
+Skip Migration: Skip mapping apiVersion from 0.0.3 to 0.0.4.
+Skip migration Skip mapping apiVersion from 0.0.4 to 0.0.5
+Skip Migration Skip mapping apiVersion from 0.0.5 to 0.0.6.
+Skip migration Upgrade manifest specification version from 0.0.1 to 0.0.2
+Skip migration Upgrade manifest specification version from 0.0.2 to 0.0.4
+✔ Application Migration
+Load subgraph from subgraph.yaml
+Load contract ABI from abis/Contract.json
+✔ Load Contract ABI
+Generate types for contract ABI: contract (abis/Contract.json)
+Write the type to the generated /Contract/Contract.ts
+Generate types for the Contract ABI
+Generate types for data source templates
+✔ Load the data source template ABI
+✔ Generate types for the data source template ABI
 ✔ Load GraphQL schema from schema.graphql
-  Write types to generated/schema.ts
-✔ Generate types for GraphQL schema
+Write types to generated /schema.ts
+✔ Generate types for the GraphQL schema
 
-Types generated successfully
+Successfully generated types
 ```
 
-2. graph build
-将subgraph变成成WebAssembly，等待部署
-```bash
-➜  friend-tech git:(main) ✗ graph build  
-  Skip migration: Bump mapping apiVersion from 0.0.1 to 0.0.2
-  Skip migration: Bump mapping apiVersion from 0.0.2 to 0.0.3
-  Skip migration: Bump mapping apiVersion from 0.0.3 to 0.0.4
-  Skip migration: Bump mapping apiVersion from 0.0.4 to 0.0.5
-  Skip migration: Bump mapping apiVersion from 0.0.5 to 0.0.6
-  Skip migration: Bump manifest specVersion from 0.0.1 to 0.0.2
-  Skip migration: Bump manifest specVersion from 0.0.2 to 0.0.4
-✔ Apply migrations
-✔ Load subgraph from subgraph.yaml
+2. Build the graph
+Turn subgraph into WebAssembly and wait for deployment
+```Bash
+➜ friend-tech git:(main) ✗ graph build  
+  Skip migration: Upgrade apiVersion from 0.0.1 to 0.0.2.
+  Skip migration: skip mapping apiVersion from 0.0.2 to 0.0.3.
+  Skip migration: Skip mapping apiVersion from 0.0.3 to 0.0.4.
+  Skip migration Skip mapping apiVersion from 0.0.4 to 0.0.5
+  Skip Migration Skip mapping apiVersion from 0.0.5 to 0.0.6.
+  Skip migration Upgrade manifest specification version from 0.0.1 to 0.0.2
+  Skip migration Upgrade manifest specification version from 0.0.2 to 0.0.4
+✔ Application Migration
+Load subgraph from subgraph.yaml
   Compile data source: Contract => build/Contract/Contract.wasm
-✔ Compile subgraph
-  Copy schema file build/schema.graphql
-  Write subgraph file build/Contract/abis/Contract.json
-  Write subgraph manifest build/subgraph.yaml
-✔ Write compiled subgraph to build/
+✔ Compile the subgraph
+  Copy the schema file build/schema.graphql
+  Compile subgraph file build/Contract/abis/Contract.json
+  Write the subgraph manifest build/subgraph.yaml
+✔ Write the compiled subgraph to build/
 
-Build completed: build/subgraph.yaml
+Build is complete: build/subgraph.yaml
 ```
 
-3. 部署我们的子图
-   启动我们的本地docker实例（注意修改node.toml中的rpc地址，需要api key，如果没有可以到chainbase后台创建）
+3. Deploying our subgraph
+   Start our local docker instance (note that modifying the rpc address in node.toml requires an api key, if you don't have one you can go to the chainbase backend and create one).
 
 ```bash
-➜  cd docker
-➜  vim node.toml(*修改RPC地址*)
-➜  cd docker-compose up
+➜ cd docker
+➜ vim node.toml(* modify the RPC address*)
+➜ cd docker-compose up
 ```
-部署成功后，我们稍等几分钟，本都数据库中应该就有我们的索引数据了
-![img.png](friend-tech/imgs/img_11.png)
+After a successful deployment, let's wait a few minutes and we should have our index data in this database
+! [img.png](imgs/img_11.png)
 
-使用另外一个终端，部署我们的子图
-```bash
-cd ../friend-tech 
+Using another terminal, deploy our subgraphs
+```bash.
+cd ... /friend-tech 
 yarn create-local
 yarn deploy-local 
 ```
 
-部署成功后，可以在docker运行日志里面看到我们新部署的子图deployment_id
-![img.png](friend-tech/imgs/img_9.png)
-本地打开graphql查询窗口
+After a successful deployment, you can see the deployment_id of our newly deployed subgraph in the docker runtime logs
+![img.png](imgs/img_9.png)
+Open the graphql query window locally
 http://127.0.0.1:8000/subgraphs/id/QmQVk7YWVwHRhxHvZyqyLxT8Ue4hc2TWtk439xocMeNjZF
-![img.png](friend-tech/imgs/img_10.png)
+![img.png](imgs/img_10.png)
