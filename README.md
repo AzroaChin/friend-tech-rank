@@ -1,4 +1,4 @@
-# Friend Tech Submap Development
+# Friend Tech subgraph Development
 
 ---
 Friend Tech Project Information
